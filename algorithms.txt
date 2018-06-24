@@ -1,0 +1,229 @@
+Good algorithms solve a problem efficiently
+
+Divide-and-Conquer
+-Breaks a problem into subproblems that are similar to the original problem, recursively solves the subproblems, and combines the solutions to the subproblems to solve the original problem
+-Since subproblems are solved recursively, each subproblem must be smaller than the original
+--There must also be a base case for subproblems
+-Has three parts:
+1.  Divide the problem into a number of subproblems that are smaller instances of the same problem
+2.  Conquer the subproblems by solving them recursively, if subproblems are small enough solve them as base case
+3.  Combine solutions to the subproblems into the solution for the original problem
+
+Asymptotic Analysis-- allows algorithms to be compared indepdently of language or hardware so we can conclusively find the most efficient algorithm
+
+If you have numbers 1-16 listed and you need to guess the right one, you can find the value a few ways.  In the example, the program tells you whether you need to go higher or lower.
+
+Linear Search-- start a 1 and go up to 16 until you find the value.  This can ake an average of 8 searches, as you can go through 16 searches to find the right value or just one.
+
+Binary Search-- since the program tells us whether to go higher or lower, we can start in the middle and elimnate half the options off the bat.  If we continue to choose the middle value, it will take no more than 4-5 searches to find the answer.  
+-Generally, BS continuously divides the portion of the list in half that could contain the item, until you've narrowed down the possible locations to just one.
+
+Standard Binary Search Pseudocode:
+1.  let min = 1, max = n
+2.  Guess average of max and min, if guessed stop!
+3.  If guess is too low, set min to be one larger than the guess (min + 1)
+4.  If the guess is too high, set max to be one smaller (max - 1)
+5.  Back to step 2
+
+Array Binary Search Pseudocode:
+Let min = 0 and max = n-1.
+Compute guess as the average of max and min, rounded down (so that it is an integer).
+If array[guess] equals target, then stop. You found it! Return guess.
+If the guess was too low, that is, array[guess] < target, then set min = guess + 1.
+Otherwise, the guess was too high. Set max = guess - 1.
+Go back to step 2.
+
+BS Runtime calculated by halving the number of elements in the array until you hit 1, each time you halve it is another search
+-Another way to think about it:  everytime the size of the array doubles you need an additional guess
+-Uses math function base-2 logarithm
+
+
+Asymptotic Notation-- calculates the actual computation runtime for an algorithm
+-Must consider how long the algorithm takes with different input sizes and how fast a function grows with the input size
+-Used when we drop the constant coefficients and the less significant terms
+-Has 3 forms, Big-Theta, Big-O, and Big-Omega
+--how fast function grows with size is referred to as rate of growth of running time
+
+List of functions often encountered, ordered from slowest to fastest:
+1.  Theta(1)
+2.  Theta(log2n)
+3.  Theta(n)
+4.  Theta(nlog2n)
+5.  Theta(n2)
+6.  Theta(n2log2n)
+7.  Theta(n3)
+8.  Theta(2n)
+9.  Theta(n!)
+
+
+Growth listed from slowest to fastest below
+Constant Growth-- if output does not change based on the input, typically values with no n in the expression
+Logarithmic-- log8n, log2n
+Linear Growth-- if output increases linearly with size of input, find where n is never raised to a power (besides1) OR where n is never used AS a power
+Linearithmitic-- nlog2n, nlog8n
+Polynomial Growth-- output increases according to polynomial expression, find where n is raised to some constant power
+Exponential Growth-- if output increases according to exponential expression, find where a constant is being raised to expression involving n
+
+
+
+-Big-Theta
+--each time the for loop runs on BS, it compares guess w arr.length, compares arr[guess] with value, possibly returns value, and increments guess.  we have n for iterations and c1 is the sum of the times for all computations in one loop iteration to run.
+---Cannot give c1 a value because it depends on computer, prog language, and compiler/interpreter and other factors
+-c2 represents the overhead caused by for loop being set up, initiating guess to 0, and possibly returning -1
+--total time for linear search in worst case = c1 * n + c2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+---What's signifiicant is that worst-case running time of linear search grows like n, aka Theta of n
+----Once n gets large enough, the running time is atleast k1 * n, and at most k2 * n
+----This is less significant with smaller n values
+--Whenever base of log is constant, we use math formula below
+logan = logbn / logba
+---if a and b are constants than logan and lobn differ by logba which is a constant factor
+--Worst case running time of binary search is Theta(logan) for any positivate constant a
+---this is because the mostguesses are log2n + 1, taking a constant time for each guess
+
+
+-Big-O Notation
+-Used to bind the growth of running time to within constant factors above and below, sometimes only bound above
+-Used for asymptotic upper bounds
+-Big-O can have same value as Theta but not vice versa
+--the running time grows at most this much, but it could grow more slowly
+---O(f(n)) == k * f(n) for constant K
+
+
+-Big-Omega
+-Used for asymptotic lower bounds
+-Can have same value as theta but not vice versa
+-When you have $10 but say "I have an amount of money in my pocket, and it's at least 10 dollars." 
+
+
+
+Route-Finding/Path-Search
+--Some examples include pac-man (ghost path following pacman), driving instructions from Dallas to Orlando, or the royal family tree (how is prince related to king?)
+
+Maze example- character can navigate to destinations in a maze, human player can control character by clicking on next destination in maze, and computer figures out how to move character there.
+-destination is labeled GOAL with a red rectangle, characters starts off on 
+-Program determines precise set of movements needed to get where user clicked and then animate them.
+-First step to establish rules (walls are made of gray squares, legal locations are empty, in each step the character can move from one square to an adjacent square but not diagnolly)
+
+-The program should move 1 square closer to goal in each step, but what does that mean?
+-Algorithm needs to find which of the surrounding squares are closer to the goal, done by assigning a cost to each square
+--Cost represents minimum number of steps character would have to take to get from start to end
+---Start with goal square, assign it 0.  Find all squares that are 1 step away and mark them one, 2 steps away marked as 2, etc.
+----essentially, mark squares in order of increasing distance from goal.  after making squares with the number k, mark the number with k + 1 
+
+
+Selection Sort
+-Key step is swapping location of two items in an array
+-Good idea to create a subarray to hold element in position 1 when finding second smallest value
+-When analyzing runtime must consider all functions being used for sort
+
+-Pseudocode
+--Find smallest value, swap it with first element
+--Find second smallest value and swap with second element
+--Find third smallest value and swap with third element
+
+-Runtime
+Has 3 parts:
+1.  The running time for all the calls to indexOfMinimum.
+2.  The running time for all the calls to swap.
+3.  The running time for the rest of the loop in the selectionSort function.
+--Parts 2+3 have n calls to swap, each call takes constant time.
+---Time for all calls to swap is Theta(n)
+---Rest of loop in selectionSort is just testing and incrementing loop variable, constant time for each of the n iterations, is also Theta(n)
+---All of indexOfMinimum is Theta(n^2)
+--Since Theta(n^2) is the most significant, we would say that is the runtime
+
+-Runtime Example with array with 8 elements
+In the first call of indexOfMinimum, it has to look at every value in the array, and so the loop body in indexOfMinimum runs 8 times.
+In the second call of indexOfMinimum, it has to look at every value in the subarray from indices 1 to 7, and so the loop body in indexOfMinimum runs 7 times.
+In the third call, it looks at the subarray from indices 2 to 7; the loop body runs 6 times.
+In the fourth call, it looks at the subarray from indices 3 to 7; the loop body runs 5 times.
+…
+In the eighth and final call of indexOfMinimum, the loop body runs just 1 time.
+--Repeat finding and swapping until array is sorted
+
+
+
+Insertion Sort
+-Given an array and a new value, you must go down the line and find where the new value fits in
+--New value referred to as key, each time key is less than an element to its left, we move that element to the right by one position
+--Two things to make this work, slide operation that slides element to the right, and to save the value of the key in a separate place so it doesn't get overridden by the element to its immediate left
+--Compare key to element value, slide, and repeat until key > element value
+---When this happens, drop key into the position to the right of this element
+--Main step is making space in an array to put the current value, which is stored in the key variable.  
+
+-Pseudocode
+--Call insert function to insert element that starts at indez 1 into the sorted subarray in index 0
+--Call insert to insert the element that starts at index 2 into the sorted subarray in inices 0 through 1
+--Call insert on elemenet that starts at index 3 into sorted subarray in indices 0 through 2
+-- ...repeat
+--Finally, call insert on the element that starts at index n -1 into the sorted subarray in indices 0 through n - 2
+
+-Runtime Analysis
+--Calls insert on elements at indices n -1
+--Worst case can be calculated by multiply c number of lines of code by k number of iterations
+--Worstcase is Theta(n^2) best case is Theta(n) average case for a random array is the worst case however
+
+
+
+
+Merge Sort
+-Runtime of Theta(n lg n) in all cases
+-If full problem is to sort an entire array, subproblem is to sort subarray from index p and going through index r (aka array[p..r])
+-Heavy lifting done during combine step
+1.  Divide b finding the number q of the position midway between p and r.  Do this the same way we find midpoint for binary search -- Math.floor((p + r) / 2);
+2.  Conquer by recursively sorting the subarrays in each of the two subproblems created by the divide step
+a.  Recursively sort subarray[p..q] and recursivesort subarray [q+1..r]
+3.  Combine by merging two sorted subarrays back into single sorted subarray
+--Basecase is subarray containing fewer than 2 elements, ie when p > r, since a subarray with no elements or 1 element is already sorted, so we only dcc when p < r
+
+-Merge function, merges the sorted arrays [p..q] and [q+1..r]
+--Two subs have a total of n elements, each element must be examined in order to merge together, so best case is Theta(n)
+---To merge, create temporary arrays an copy [p..q] and [q+1..r] into these arrays (lowhalf and highhalf)
+----Lowhalf has q - p +1 elements, highalf has r - q elements
+--Merge sorted subarrays back into array[p..r]
+---i =  the next element of lowHalf that has not been copied into original array (init = 0)
+---j = the next element of highhalf that was not copied, init = 0
+---k = next location in orig array that we copy into, init k = p
+---After we copy first element into array, we must add 1 to k to increment
+----This allows us to copy the next smallest element into the next position of the array
+---Also increment i for lowhalf, or j from highhalf, depending on where element was taken from
+--After each incrementation, you then compare the lowest values remaining from each subarray and push the lesser of the two to the original array
+--Once a subarray is empty, bring the rest of the second subarray into the original array
+--This uses a constant number of code lines with 2 steps (compare and push), running time is Theta(n)
+
+
+Quick Sort
+-Runtime of Theta(n lg n) in best case and on average, worst-case has Theta(n^2)
+-Uses Divide and Conquer
+-Heavy lifting done in divide step instead of combine step (combine means NADA in quicksort)
+-Worst case Theta(n^2), average-case Theta(n logv2 n)
+--Constant factor hidden in big-theta for quicksort outperforms equiv in mergesort, significantly outperforms other sorts
+--After choosing pivot, partition subarray by comparing each element to the pivot
+---Maintain indexes q and j into the subarray that divide it into 4 groups
+----q = index will eventually point at pivot
+----j = common counter variable name, discarded when done
+--elements in [p..q-1] are group L, elements less than or equal to pivot
+--elements in [q..j-1] are group G, elements greater than pivot
+--elements in [j..r-1] are group U, elements with unknown relationship to pivot because they haven't been compared
+--elements in [r] is group P, the pivot
+--init q + j = p
+--At each step compare A[j], leftmost element in group U, with pivot. 
+---If A[j] > P, only increment J
+----causes G and U to slide over one position to the right
+---If A[j] <= P, swap A[j] with A[q] (A[q] === leftmost element in G), increment J, increment, Q
+----slides line divind L and G and G and U one position to the right
+---By the time we get to P, U is empty.  Swap Pivot with leftmost element in Group G: swap A[r] with A[q], putting pivot between L and G
+---Returns index q where it ended up putting pivot so quicksort can call it easily
+---Partitioning takes Theta(n) time
+
+-Psueodcode
+1.  Divide by choosing any element in subarray [p..r] (referred to as pivot)
+--rearrange elements in [p..r] so all elements in the array that are less than or equal to the pivot are to its left, and all elements greater than pivot are to its right
+---this is called partitioning
+--Matter of practice-- rightmost element in array is pivot (last element)
+--Not important to sort, just that less values are to left, greater are to the right
+2.  Conquer by recursively sorting subarrays array[p..q-1] (all elements to left) and [q+1..r] (all elements to right)
+3.  Combine NOTHING!  IT'S ALL DONE!
+
+
+
