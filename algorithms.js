@@ -173,21 +173,34 @@ console.log("Array after sorting: " + array);
 
 
 // Quicksort Example
+// swap function switches the position of the first and second position passed
 var swap = function(array, firstIndex, secondIndex) {
+    // assign the first index to the temp variable
     var temp = array[firstIndex];
+    // assign the first index the second index's value
     array[firstIndex] = array[secondIndex];
+    // assign the second index the first index's value via the temp variable
     array[secondIndex] = temp;
 };
 
+
 var partition = function(array, p, r) {
+    // q set to hold opening element position
     var q = p;
+    // loop from the start position through the end point
     for (var j = p; j < r; j ++) {
+        // if the iterated value is less than or equal to the last element in the array
        if (array[j] <= array[r]) {
+            // swap the position of the two values
            swap(array, j, q);
+           // increment the q variable to move to the next element in array
            q ++;
        }
     }
+    // once we finish iterating through the array
+    // swap the last element in the array with the element in position q
     swap(array, r, q);
+    // return the q position
     return q;
 };
 
