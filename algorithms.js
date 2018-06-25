@@ -237,43 +237,62 @@ console.log("Array after sorting:   " + array);
 var Queue = function() {
     this.items = [];
 };
+// enqueue adds to queue object
 Queue.prototype.enqueue = function(obj) {
     this.items.push(obj);
 };
+// dequeue removes from queue object
 Queue.prototype.dequeue = function() {
     return this.items.shift();
 };
+// checks if the queue is empty
 Queue.prototype.isEmpty = function() {
     return this.items.length === 0;
 };
 
 
-var doBFS = function(graph, source) {
+var doBFS = function(graph, source) {   
+    // bfsInfo acts as container
     var bfsInfo = [];
 
+    // loop over the graph
     for (var i = 0; i < graph.length; i++) {
+        // set each iteration to bfsinfo array
+        // set each iteration equal to object storing distance and predecessor
+        // init values at null
         bfsInfo[i] = {
             distance: null,
             predecessor: null };
     }
 
+    // set source distance to zero
     bfsInfo[source].distance = 0;
 
+    // create a new queue object
     var queue = new Queue();
+    // add the source to the queue
     queue.enqueue(source);
     
+    // as long as the queue is NOT empty
     while (!queue.isEmpty()) {
+        //  set vertex to be the item that's been in the queue the longest
         var vertex = queue.dequeue();
+        // loop for the length of the graph vertex
         for (var j = 0; j < graph[vertex].length; j ++) {
+            // set the neighbor of the vertex as the iterated position
             var neighbor = graph[vertex][j];
+            // if the neighbor position's distance is null
             if (bfsInfo[neighbor].distance === null){
+                // set the neighbor distance to its value + 1
                 bfsInfo[neighbor].distance = bfsInfo[vertex].distance + 1;
+                // set the predecessor to the vertex value
                 bfsInfo[neighbor].predecessor = vertex;
+                // add the neighbor to the queue
                 queue.enqueue(neighbor);
             }
         }
     }
-
+    // return the bfsInfo array
     return bfsInfo;
 };
 
