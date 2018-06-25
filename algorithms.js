@@ -204,7 +204,29 @@ var partition = function(array, p, r) {
     return q;
 };
 
+var quickSort = function(array, left, right) {
+    
+    var leftIndex = partition(array, left, right);
+
+    if (left < leftIndex - 1) {
+        quickSort(array, left, leftIndex - 1);
+    }
+
+    if (right > leftIndex) {
+        quickSort(array, leftIndex, right);
+    }
+
+    return array;
+}
+
+
+
 var array = [9, 7, 5, 11, 12, 2, 14, 3, 10, 4, 6];
+// console.log(array)
+
 var q = partition(array, 0, array.length-1);
 console.log("Array after partitioning: " + array);
+
+var m = quickSort(array, 0, array.length - 1);
+console.log("Array after sorting:   " + array);
 

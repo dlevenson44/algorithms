@@ -227,3 +227,48 @@ Quick Sort
 
 
 
+
+Breadth First Search
+-Finds shortest paths from given source vertex to all other vertices, in terms of number of edges in paths
+To get to Kevin BAcon from KAte BEll example:
+Kate BEll was in MacBeth with Nash Edgerton, who was in the Matrix reloaded with Laurence Fishburne, who was in MYstic River with Bacon
+-In above example, Kate Bell's Bacon # is 3, Edgerton is 2, and Fishburne is 1
+--BFS assigns to values to vertex v, a distance and the predecessor
+---Distance-- minimum number of edges in any path from the source vertext to vertex v
+----Distance is set to null until it has been visited
+---Predecessor-- vertext of v, along with shortest path from source vertex.  source of vertex's predecessor is some special value, such as null, indicating that it has no predecessor
+--If there's no path from source to v then the distance is infinite
+---Initially set distance and predecessor of each vertex to special value (null)
+---Start the search at the source and assign it a distance of 0
+---Then visit all neighbors of source and assign distance of 1 and set predecessor to 
+---Keep doing this until all vertices reachable from source have been visited, always visiting all distances at distance k from the source before visiting any vertex at distance k + 1
+--Use a queue to keep track of what has NOT been visited (FIFO), queue has 3 operations
+1.  Enqueue(obj) inserts an object into the queue
+2.  dequeue() removes from the queue the object that ahs been in it the longest, returning the object
+3.  isEmpty() returns true if the queue contains no objects, false otherwise
+
+-When we first visit any vertex we enqueue it
+--We enqueue the source at the start because that's always the first vertex we visit
+-To decide which vertex to visit next, we choose the vertex that has been in the queue the longest and remove it from the queue
+--AKA we use vertex that's returned from dequeue()
+
+-Pseudocode
+1.  Queue contains vertex 3 with distance 0
+2.  Dequeue vertex 3, enqueue vertices 2 and 6 with distance 1.  Queue contains vertex 2 and vertex 6 each with distance 1
+3.  Dequeue vertex 2, and enqueue vertices 4 and 5 with a distance 2.  Queue contains 6 with 1, 4 and 5 with 2
+4.  Dequeue 6, and don't enqueue any vertices.  Queue contains vertices 4 and 5 with distance 2
+5.  Dequeue vertex 4, and enqueue vertex 1 distance 3.  Queue has v5d2, v1d3
+6.  Dequeue vertex 5, no enqueue.  Queue has v1d3
+7.  Dequeue vertex 1, enqueue vertex 0 with distance 4.  Queue has v0d4
+8.  Dequeue vertex 0.  Nothing in queue, BFS terminates
+
+-At each moment, the queue either contains vertices all with the same distance, or it contains vertices with distance k followed by vertices with distance k + 1
+--This ensures we visit all vertices at distance k before we do k + 1
+
+-Sample on Khan
+--Start by visiting vertex 3 (the source), setting distance as 0 and predecessor as initial
+--Then visit vertices 2 and 6, setting distance to 1 and predecessor to 3
+--Start visiting vertices at distance 1 from the source, beginning with 2.  From 2, visit 4 and 5, set their distance and predecessor to 2, don't revisit 3
+--From 6 don't visit 5 since it was visited by 2
+--Start visiting from verticies at distance 2 from source
+
