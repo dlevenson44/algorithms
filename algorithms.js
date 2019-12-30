@@ -11,7 +11,7 @@ function linearSearch(array, targetValue) {
   return -1;
 }
 
-var array = ([1, 4, 6, 12, 18, 22, 27, 33, 35, 38, 40, 44, 49, 50, 52] 52)
+var array = ([1, 4, 6, 12, 18, 22, 27, 33, 35, 38, 40, 44, 49, 50, 52], 52)
 
 
 // Example of Binary Search on Array
